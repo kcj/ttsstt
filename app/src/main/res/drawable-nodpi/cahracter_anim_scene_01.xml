@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item
+        android:drawable="@drawable/ca01"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca02"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca03"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca04"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca05"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca06"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca07"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca08"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca07"
+        android:duration="@integer/activity_frame_duration_b" />
+    <item
+        android:drawable="@drawable/ca08"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca06"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca07"
+        android:duration="@integer/activity_frame_duration_b" />
+    <item
+        android:drawable="@drawable/ca08"
+        android:duration="@integer/activity_frame_duration_f" />
+    <item
+        android:drawable="@drawable/ca07"
+        android:duration="@integer/activity_frame_duration_b" />
+    <item
+        android:drawable="@drawable/ca08"
+        android:duration="@integer/activity_frame_duration_b" />
+    <item
+        android:drawable="@drawable/ca07"
+        android:duration="@integer/activity_frame_duration_b" />
+
+</animation-list>
