@@ -5,5 +5,5 @@ package com.example.kimcj.utils;
  */
 public class Settings {
 
-    public static String URL = "http://107.167.179.178:8080/Mina/EGateMina";
+    public static String URL = "http://107.167.173.172:8080/Mina/EGateMina";
 }
