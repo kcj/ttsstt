@@ -10,48 +10,23 @@
     tools:context="com.example.kimcj.speechtotext.MainActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="미나를 눌려 대화를 시도하세요"/>
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/textView"
-        android:id="@+id/linear1"
-        android:layout_marginTop="100px"
-        android:layout_height="150px">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="마이크"
-            android:id="@+id/mic"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text To Speech"
-            android:id="@+id/tts_btn"
-            android:layout_below="@+id/mic"
-            />
-    </LinearLayout>
+        android:hint="아이디를 넣어 주세요."
+        android:textSize="30dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_below="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_marginTop="50px"
+        android:layout_marginTop="250px"
         android:layout_height="150px">
 
 
         <EditText
             android:layout_width="450px"
             android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:id="@+id/userText" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -59,16 +34,8 @@
             android:layout_height="wrap_content"
             android:text="send"
             android:layout_marginLeft="100px"
-            android:id="@+id/button" />
+            android:id="@+id/userOk" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/charaterView"
-        android:layout_width="150dp"
-        android:layout_height="296dp"
-        android:layout_marginLeft="1dp"
-        android:background="@drawable/cahracter_anim_scene_01"
-        android:layout_alignParentBottom="true"
-        />
 
 </RelativeLayout>

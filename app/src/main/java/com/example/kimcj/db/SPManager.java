@@ -21,6 +21,21 @@ public class SPManager {
 		editor.commit();
 	}
 
+	/*user 등록.*/
+	public void setUser(String key, String value){
+		SharedPreferences pref = mContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		if(!getUser().equals("")){
+			editor.remove(key);
+		}
+		editor.putString(key, value);
+		editor.commit();
+	}
+
+	public String getUser(){
+		SharedPreferences pref = mContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
+		return pref.getString("user", "");
+	}
 	/*
 	* 푸디 session
 	* */
@@ -87,21 +102,5 @@ public class SPManager {
 	public String getFoodiNextMessage(){
 		SharedPreferences pref = mContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
 		return pref.getString("foodinextmessage", "");
-	}
-
-	/*메인 화면 탭 번호 저장*/
-	public void setMainTabName(String key, String value){
-		SharedPreferences pref = mContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = pref.edit();
-		if(!getMainTabName().equals("")){
-			editor.remove(key);
-		}
-		editor.putString(key, value);
-		editor.commit();
-	}
-
-	public String getMainTabName(){
-		SharedPreferences pref = mContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
-		return pref.getString("maintabname", "");
 	}
 }

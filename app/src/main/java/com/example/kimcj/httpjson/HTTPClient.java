@@ -5,6 +5,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.example.kimcj.speechtotext.MainActivity;
+import com.example.kimcj.speechtotext.SpeechActivity;
 import com.example.kimcj.utils.Settings;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -49,8 +50,8 @@ public class HTTPClient extends AsyncTask{
             connection.setDoOutput(true);
             connection.setInstanceFollowRedirects(false);
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-            if (!MainActivity.foodi_session.equals("")) {
-                connection.setRequestProperty("Cookie", MainActivity.foodi_session);
+            if (!SpeechActivity.foodi_session.equals("")) {
+                connection.setRequestProperty("Cookie", SpeechActivity.foodi_session);
             }
 
             List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>(3);
@@ -67,7 +68,7 @@ public class HTTPClient extends AsyncTask{
 
             connection.connect();
 
-            if (MainActivity.foodi_session.equals("")) {
+            if (SpeechActivity.foodi_session.equals("")) {
                 cookies = connection.getHeaderField("Set-Cookie");
                 Map m = connection.getHeaderFields();
                 if (m.containsKey("Set-Cookie")) {
@@ -76,7 +77,7 @@ public class HTTPClient extends AsyncTask{
                         cookies += (String) i.next();
                     }
                 }
-                MainActivity.foodi_session = cookies;
+                SpeechActivity.foodi_session = cookies;
             }
 
             StringBuilder responseStringBuilder = new StringBuilder();
@@ -93,11 +94,11 @@ public class HTTPClient extends AsyncTask{
             String[] response = responseStringBuilder.toString().split("<");
             Log.e("HTTp", response[0].toString());
 
-            MainActivity.tts.setLanguage(Locale.KOREA);
-            MainActivity.tts.speak(response[0].toString(), TextToSpeech.QUEUE_FLUSH, null);
+            SpeechActivity.tts.setLanguage(Locale.KOREA);
+            SpeechActivity.tts.speak(response[0].toString(), TextToSpeech.QUEUE_FLUSH, null);
 
             // 파일에 쓰기
-            MainActivity.writeStudy_web(response[0].toString().replace("\n", ""));
+            SpeechActivity.writeStudy_web(response[0].toString().replace("\n", ""));
 
         } catch (Exception e) {
             e.printStackTrace();
