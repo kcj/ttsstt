@@ -12,10 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cjc.nlp.cjcNlp;
 import com.example.kimcj.db.SPManager;
 import com.example.kimcj.httpjson.HTTPClient;
 
@@ -34,7 +37,10 @@ public class SpeechActivity extends AppCompatActivity implements View.OnClickLis
     Intent i;
     SpeechRecognizer mRecognizer;
     TextView textView;
+
+    EditText chatEText;
     Button btn;
+    Button chatsend;
 
     public static String foodi_session = "";
 
@@ -54,11 +60,16 @@ public class SpeechActivity extends AppCompatActivity implements View.OnClickLis
         i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
 
+        chatEText = (EditText) findViewById(R.id.chatEText);
+
         btn = (Button) findViewById(R.id.mic);
         btn.setOnClickListener(this);
 
         tts_btn = (Button) findViewById(R.id.tts_btn);
         tts_btn.setOnClickListener(this);
+
+        chatsend = (Button) findViewById(R.id.chatsend);
+        chatsend.setOnClickListener(this);
 
 //        btn.setVisibility(View.GONE);
 //        tts_btn.setVisibility(View.GONE);
@@ -153,7 +164,7 @@ public class SpeechActivity extends AppCompatActivity implements View.OnClickLis
                     e.toString();
                 }
 //                tts_GO();
-                new HTTPClient().execute("심심해");
+                new HTTPClient().execute("foodie", "심심해");
 
                 break;
             case R.id.charaterView:
@@ -172,6 +183,22 @@ public class SpeechActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (drawable.isRunning())
                     drawable.stop();
+                break;
+            case R.id.chatsend:
+
+                boolean check = new cjcNlp().checkHangul(chatEText.getText().toString());
+
+                if((chatEText.getText().length() != 0) && !check){
+                    Log.e("cj", "check " + check);
+                    SPManager spManager = new SPManager(this);
+
+                    new HTTPClient().execute("chat", spManager.getUser(), chatEText.getText().toString());
+                    chatEText.setText("");
+                }else {
+                    Log.e("cj", "check " + check);
+
+                    Toast.makeText(getApplicationContext(), "빈 칸을 채워 주세요", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

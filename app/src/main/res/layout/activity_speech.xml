@@ -40,18 +40,29 @@
             />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/charaterView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="1dp"
+        android:background="@drawable/cahracter_anim_scene_01"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linear1" />
+
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_below="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_marginTop="50px"
-        android:layout_height="150px">
+        android:layout_height="150px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
 
         <EditText
             android:layout_width="450px"
             android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:id="@+id/chatEText" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -59,16 +70,7 @@
             android:layout_height="wrap_content"
             android:text="send"
             android:layout_marginLeft="100px"
-            android:id="@+id/button" />
+            android:id="@+id/chatsend" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/charaterView"
-        android:layout_width="150dp"
-        android:layout_height="296dp"
-        android:layout_marginLeft="1dp"
-        android:background="@drawable/cahracter_anim_scene_01"
-        android:layout_alignParentBottom="true"
-        />
 
 </RelativeLayout>

@@ -1,90 +1,100 @@
 package com.example.kimcj.speechtotext;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.speech.tts.TextToSpeech;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.support.v7.app.AlertDialog;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kimcj.db.SPManager;
-import com.example.kimcj.httpjson.HTTPClient;
+public class MainActivity extends Activity {
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
-public class MainActivity extends Activity implements View.OnClickListener{
-
-    Handler handler = new Handler();
-
-    SPManager spManager;
-
-    public EditText userText;
-    public Button userOk;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        handler.postDelayed(new Runnable() {
+//        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        if (activeNetwork == null) {
+//        }
 
-            @Override
-            public void run() {
-                if(!spManager.getUser().isEmpty()){
-                    goSpeech();
-                }
-            }
-        }, 1000);
-
-        userText = (EditText) findViewById(R.id.userText);
-
-        userOk = (Button) findViewById(R.id.userOk);
-        userOk.setOnClickListener(this);
-
-        spManager = new SPManager(this);
+        imageView = (ImageView) findViewById(R.id.imageView);
     }
 
     @Override
-    public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.userOk :
-
-                    if(userText.getText().length() == 0){
-                        Toast.makeText(MainActivity.this, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getApplicationContext(), "아이디를 입력해주세요2", Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(this, "아이디를 입력해주세요3", Toast.LENGTH_SHORT).show();
-                    }else{
-                        goSpeech();
-
-                        spManager.setUser("user", userText.getText().toString());
-
-                        Log.e("gdgdsgds", spManager.getUser());
-                    }
-
-            }
+    protected void onResume() {
+        super.onResume();
+        kcj();
     }
 
-    public void goSpeech(){
-        Intent intent = new Intent(this, SpeechActivity.class);
-        startActivity(intent);
-        finish();
+    public void goIntent() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            Intent intent = new Intent(this, Wtf_inbi.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(getApplicationContext(), "인터넷 연결 안됨.", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public void kcj(){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                int permissionResult = checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+                if (permissionResult == PackageManager.PERMISSION_DENIED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                        dialog.setTitle("권한이 필요합니다.")
+                                .setMessage("이 기능을 사용하기 위해서는 단말기의 \"Voice\" 권한이 필요합니다. 계속하시겠습니까?")
+                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1000);
+                                            goIntent();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getApplicationContext(), "기능을 취소했습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                    else {
+                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1000);
+                    }
+                }
+                /* CALL_PHONE의 권한이 있을 때 */
+                else {
+                    goIntent();
+                }
+            }
+            else {
+                goIntent();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
